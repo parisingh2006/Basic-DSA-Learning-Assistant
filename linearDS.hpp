@@ -24,6 +24,7 @@ private:
 
     // Fixed Bounded Array Stack
     static const int STACK_CAPACITY = 100;
+    // const keeps the value fixed capacity i.e. 100
     int stack[STACK_CAPACITY];
     int top;
 
@@ -33,12 +34,12 @@ private:
     int front;
     int rear;
 
-    void clearSLL();
+    void clearSLL();  // for deletion 
     void clearDLL();
 
 public:
-    LinearDS();
-    ~LinearDS();
+    LinearDS();  // for initializing
+    ~LinearDS(); // destructor for deletion/destroying object
 
     // Singly Linked List
     void insertNodeSLL(int val);
