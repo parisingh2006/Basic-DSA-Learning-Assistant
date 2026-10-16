@@ -12,6 +12,8 @@ Performance::Performance()
 
 void Performance::setPerformance(int s, int total)
 {
+    // s = students score
+    // total = total number of questions
     if (total <= 0 || s < 0 || s > total)
     {
         performanceAvailable = false;
