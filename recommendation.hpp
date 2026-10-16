@@ -8,6 +8,7 @@ class Recommendation
 public:
     void suggestTopic(int score, int totalQuestions, bool quizAttempted);
     void suggestTopic(const ProblemBank &p); // function overloading : as has same function name but different parameters
+    // Refernce (&) avoids unnecessary copying 
 };
 
 // I used foward declaration as the function suggest topic uses the reference to it
