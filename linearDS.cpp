@@ -6,6 +6,7 @@ using namespace std;
 LinearDS::LinearDS()
 {
     sllHead = nullptr;
+    // nullptr means pointer is not pointing to any node i.e. list is empty
     dllHead = nullptr;
     top = -1;
     front = -1;
