@@ -1,4 +1,5 @@
 #pragma once
+// saving and loading student progress
 
 class FileManager
 {
