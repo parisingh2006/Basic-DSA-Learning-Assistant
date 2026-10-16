@@ -8,7 +8,7 @@ private:
     bool quizAttempted;
 
 public:
-    ProblemBank();
+    ProblemBank(); // this constructor initializes the quiz variables when object of ProblemBank class is created.
 
     void startQuiz();
     void displayScore();
