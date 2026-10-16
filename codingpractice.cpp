@@ -1,5 +1,5 @@
-#include <iostream>
 #include "CodingPractice.hpp"
+#include <iostream>
 
 using namespace std;
 
@@ -10,276 +10,259 @@ CodingPractice::CodingPractice()
 
 void CodingPractice::initializeProblems()
 {
-    // Arrays
-    problems[0] = {
-        "Reverse an Array In-Place",
+    int idx = 0;
+
+    // --- Topic 1: Arrays ---
+    problems[idx++] = {
+        "Reverse an Array",
         1,
-        "Given an integer array of size N, reverse its elements without using auxiliary arrays.",
-        "Input: arr = [1, 2, 3, 4, 5], N = 5",
-        "Output: [5, 4, 3, 2, 1]",
-        "Use two pointers (start = 0, end = N - 1) and swap while start < end.",
-        "void reverseArray(int arr[], int n) {\n"
-        "    int start = 0, end = n - 1;\n"
-        "    while (start < end) {\n"
-        "        int temp = arr[start];\n"
-        "        arr[start] = arr[end];\n"
-        "        arr[end] = temp;\n"
-        "        start++; end--;\n"
-        "    }\n"
-        "}"};
-    problems[1] = {
-        "Find Maximum and Minimum in an Array",
+        "Given an array of integers, reverse the array in place.",
+        "5\n1 2 3 4 5",
+        "5 4 3 2 1",
+        "Use two pointers, one at the start and one at the end, swapping elements until they meet.",
+        "void reverseArray(int arr[], int n) {\n    int start = 0, end = n - 1;\n    while (start < end) {\n        swap(arr[start], arr[end]);\n        start++;\n        end--;\n    }\n}",
+        "https://www.hackerrank.com/challenges/arrays-ds/problem"};
+
+    problems[idx++] = {
+        "Find Maximum Element",
         1,
-        "Traverse an array of N integers and identify both the maximum and minimum elements.",
-        "Input: arr = [12, 4, 56, 2, 9], N = 5",
-        "Output: Min = 2, Max = 56",
-        "Initialize min and max with arr[0], then iterate from index 1 to N-1 updating them.",
-        "void findMinMax(int arr[], int n, int &minVal, int &maxVal) {\n"
-        "    minVal = arr[0]; maxVal = arr[0];\n"
-        "    for (int i = 1; i < n; i++) {\n"
-        "        if (arr[i] < minVal) minVal = arr[i];\n"
-        "        if (arr[i] > maxVal) maxVal = arr[i];\n"
-        "    }\n"
-        "}"};
+        "Find and return the maximum element in a given integer array.",
+        "5\n12 45 2 99 23",
+        "99",
+        "Assume the first element is maximum, then iterate and compare.",
+        "int findMax(int arr[], int n) {\n    int maxVal = arr[0];\n    for(int i = 1; i < n; i++) {\n        if(arr[i] > maxVal) maxVal = arr[i];\n    }\n    return maxVal;\n}",
+        "https://www.hackerrank.com/challenges/simple-array-sum/problem"};
 
-    // Searching
-    problems[2] = {
-        "Iterative Binary Search",
+    // --- Topic 2: Searching ---
+    problems[idx++] = {
+        "Linear Search",
         2,
-        "Implement binary search on a sorted array of size N to locate a target key.",
-        "Input: arr = [2, 5, 8, 12, 16], target = 8",
-        "Output: Found at Index: 2",
-        "Calculate mid = low + (high - low)/2. Adjust low or high boundaries accordingly.",
-        "int binarySearch(int arr[], int n, int key) {\n"
-        "    int low = 0, high = n - 1;\n"
-        "    while (low <= high) {\n"
-        "        int mid = low + (high - low) / 2;\n"
-        "        if (arr[mid] == key) return mid;\n"
-        "        else if (arr[mid] < key) low = mid + 1;\n"
-        "        else high = mid - 1;\n"
-        "    }\n"
-        "    return -1;\n"
-        "}"};
-    problems[3] = {
-        "Find First Occurrence of an Element",
+        "Search for a target value in an array and return its 0-based index. Return -1 if not found.",
+        "5 20\n10 20 30 40 50",
+        "1",
+        "Check each element from left to right one by one.",
+        "int linearSearch(int arr[], int n, int target) {\n    for(int i = 0; i < n; i++) {\n        if(arr[i] == target) return i;\n    }\n    return -1;\n}"};
+
+    problems[idx++] = {
+        "Binary Search",
         2,
-        "In a sorted array with duplicates, return the lowest index where target appears.",
-        "Input: arr = [1, 2, 2, 2, 3], target = 2",
-        "Output: Index: 1",
-        "When arr[mid] == target, save the index and continue searching the left half (high = mid - 1).",
-        "int firstOccurrence(int arr[], int n, int key) {\n"
-        "    int low = 0, high = n - 1, res = -1;\n"
-        "    while (low <= high) {\n"
-        "        int mid = low + (high - low) / 2;\n"
-        "        if (arr[mid] == key) { res = mid; high = mid - 1; }\n"
-        "        else if (arr[mid] < key) low = mid + 1;\n"
-        "        else high = mid - 1;\n"
-        "    }\n"
-        "    return res;\n"
-        "}"};
+        "Search for a target value in a sorted array in O(log n) time.",
+        "5 40\n10 20 30 40 50",
+        "3",
+        "Find the middle index. If key is smaller, search left half; otherwise search right half.",
+        "int binarySearch(int arr[], int n, int target) {\n    int low = 0, high = n - 1;\n    while(low <= high) {\n        int mid = low + (high - low) / 2;\n        if(arr[mid] == target) return mid;\n        else if(arr[mid] < target) low = mid + 1;\n        else high = mid - 1;\n    }\n    return -1;\n}",
+        "https://www.hackerrank.com/challenges/icecream-parlor/problem"};
 
-    // Sorting
-    problems[4] = {
-        "Bubble Sort with Early Exit",
+    // --- Topic 3: Sorting ---
+    problems[idx++] = {
+        "Bubble Sort",
         3,
-        "Sort an array in ascending order using Bubble Sort optimized with a boolean swapped flag.",
-        "Input: arr = [64, 34, 25, 12, 22, 11, 90]",
-        "Output: [11, 12, 22, 25, 34, 64, 90]",
-        "If no swaps occur in an inner pass, break early as the array is already sorted.",
-        "void bubbleSort(int arr[], int n) {\n"
-        "    for (int i = 0; i < n - 1; i++) {\n"
-        "        bool swapped = false;\n"
-        "        for (int j = 0; j < n - i - 1; j++) {\n"
-        "            if (arr[j] > arr[j + 1]) {\n"
-        "                int temp = arr[j]; arr[j] = arr[j + 1]; arr[j + 1] = temp;\n"
-        "                swapped = true;\n"
-        "            }\n"
-        "        }\n"
-        "        if (!swapped) break;\n"
-        "    }\n"
-        "}"};
-    problems[5] = {
-        "Insertion Sort Implementation",
+        "Sort an array of n integers in ascending order using Bubble Sort.",
+        "5\n64 34 25 12 22",
+        "12 22 25 34 64",
+        "Repeatedly swap adjacent elements if they are in the wrong order.",
+        "void bubbleSort(int arr[], int n) {\n    for(int i = 0; i < n - 1; i++) {\n        for(int j = 0; j < n - i - 1; j++) {\n            if(arr[j] > arr[j + 1]) swap(arr[j], arr[j + 1]);\n        }\n    }\n}",
+        "https://www.hackerrank.com/challenges/ctci-bubble-sort/problem"};
+
+    problems[idx++] = {
+        "Selection Sort",
         3,
-        "Sort an array in ascending order by shifting larger elements to make room for insertion.",
-        "Input: arr = [12, 11, 13, 5, 6]",
-        "Output: [5, 6, 11, 12, 13]",
-        "Pick element key = arr[i]. Shift elements of arr[0..i-1] that are greater than key to the right.",
-        "void insertionSort(int arr[], int n) {\n"
-        "    for (int i = 1; i < n; i++) {\n"
-        "        int key = arr[i];\n"
-        "        int j = i - 1;\n"
-        "        while (j >= 0 && arr[j] > key) {\n"
-        "            arr[j + 1] = arr[j];\n"
-        "            j--;\n"
-        "        }\n"
-        "        arr[j + 1] = key;\n"
-        "    }\n"
-        "}"};
+        "Sort an array by repeatedly finding the minimum element from the unsorted part.",
+        "5\n29 10 14 37 13",
+        "10 13 14 29 37",
+        "Find minimum element in unsorted array and swap with element at beginning.",
+        "void selectionSort(int arr[], int n) {\n    for(int i = 0; i < n - 1; i++) {\n        int minIdx = i;\n        for(int j = i + 1; j < n; j++) {\n            if(arr[j] < arr[minIdx]) minIdx = j;\n        }\n        swap(arr[i], arr[minIdx]);\n    }\n}",
+        "https://www.hackerrank.com/challenges/correctness-invariant/problem"};
 
-    // Linked Lists
-    problems[6] = {
-        "Reverse a Singly Linked List",
+    // --- Topic 4: Linked Lists ---
+    problems[idx++] = {
+        "Insert at Head",
         4,
-        "Reverse a singly linked list in-place using three pointers.",
-        "Input: 1 -> 2 -> 3 -> 4 -> NULL",
-        "Output: 4 -> 3 -> 2 -> 1 -> NULL",
-        "Maintain prev (null), curr (head), and next (null). Rewire curr->next to prev.",
-        "Node* reverseList(Node* head) {\n"
-        "    Node* prev = nullptr;\n"
-        "    Node* curr = head;\n"
-        "    while (curr != nullptr) {\n"
-        "        Node* nextNode = curr->next;\n"
-        "        curr->next = prev;\n"
-        "        prev = curr;\n"
-        "        curr = nextNode;\n"
-        "    }\n"
-        "    return prev;\n"
-        "}"};
-    problems[7] = {
-        "Find the Middle Node of a Linked List",
+        "Insert a new node with data x at the beginning of a singly linked list.",
+        "3\n10 20 30",
+        "30 -> 20 -> 10 -> NULL",
+        "Create new node, set newNode->next = head, then update head = newNode.",
+        "void insertAtHead(Node*& head, int val) {\n    Node* newNode = new Node(val);\n    newNode->next = head;\n    head = newNode;\n}",
+        "https://www.hackerrank.com/challenges/insert-a-node-at-the-head-of-a-linked-list/problem"};
+
+    problems[idx++] = {
+        "Reverse a Linked List",
         4,
-        "Find the middle element of a singly linked list in a single traversal.",
-        "Input: 10 -> 20 -> 30 -> 40 -> 50 -> NULL",
-        "Output: Middle Node Data: 30",
-        "Use Floyd's Cycle / Tortoise and Hare approach: slow moves 1 step, fast moves 2 steps.",
-        "Node* findMiddle(Node* head) {\n"
-        "    Node* slow = head;\n"
-        "    Node* fast = head;\n"
-        "    while (fast != nullptr && fast->next != nullptr) {\n"
-        "        slow = slow->next;\n"
-        "        fast = fast->next->next;\n"
-        "    }\n"
-        "    return slow;\n"
-        "}"};
+        "Reverse a singly linked list iteratively.",
+        "1 -> 2 -> 3 -> NULL",
+        "3 -> 2 -> 1 -> NULL",
+        "Maintain three pointers: prev, current, and nextNode.",
+        "Node* reverseList(Node* head) {\n    Node* prev = nullptr;\n    Node* curr = head;\n    while(curr != nullptr) {\n        Node* nextNode = curr->next;\n        curr->next = prev;\n        prev = curr;\n        curr = nextNode;\n    }\n    return prev;\n}",
+        "https://www.hackerrank.com/challenges/reverse-a-linked-list/problem"};
 
-    // Stacks
-    problems[8] = {
-        "Check Balanced Parentheses",
+    // --- Topic 5: Stacks ---
+    problems[idx++] = {
+        "Implement Stack using Array",
         5,
-        "Determine if an expression with '(', ')', '{', '}', '[', ']' has balanced brackets.",
-        "Input: {[()]}",
-        "Output: Balanced (Valid)",
-        "Push opening brackets to a stack; on a closing bracket, verify that the top matches.",
-        "bool isBalanced(const char expr[]) {\n"
-        "    char st[100]; int top = -1;\n"
-        "    for (int i = 0; expr[i] != '\\0'; i++) {\n"
-        "        char ch = expr[i];\n"
-        "        if (ch == '(' || ch == '{' || ch == '[') st[++top] = ch;\n"
-        "        else if (ch == ')' || ch == '}' || ch == ']') {\n"
-        "            if (top == -1) return false;\n"
-        "            char o = st[top--];\n"
-        "            if ((ch == ')' && o != '(') || (ch == '}' && o != '{') || (ch == ']' && o != '[')) return false;\n"
-        "        }\n"
-        "    }\n"
-        "    return (top == -1);\n"
-        "}"};
-    problems[9] = {
-        "Reverse a String using a Custom Stack",
-        5,
-        "Reverse an input character string using a manual LIFO stack.",
-        "Input: \"STRUCTURE\"",
-        "Output: \"ERUTCURTS\"",
-        "Push each character onto the stack until null-terminator, then pop back sequentially.",
-        "void reverseString(char str[]) {\n"
-        "    char st[100]; int top = -1;\n"
-        "    for (int i = 0; str[i] != '\\0'; i++) st[++top] = str[i];\n"
-        "    int idx = 0;\n"
-        "    while (top >= 0) str[idx++] = st[top--];\n"
-        "}"};
+        "Implement push and pop operations using a fixed-size array.",
+        "push(10), push(20), pop()",
+        "Popped: 20",
+        "Keep track of a 'top' index starting at -1.",
+        "class Stack {\n    int top = -1, arr[100];\npublic:\n    void push(int x) { if(top < 99) arr[++top] = x; }\n    int pop() { return (top >= 0) ? arr[top--] : -1; }\n};",
+        "https://www.hackerrank.com/challenges/maximum-element/problem"};
 
-    // Queues
-    problems[10] = {
-        "Implement a Circular Queue using an Array",
+    problems[idx++] = {
+        "Balanced Parentheses",
+        5,
+        "Check whether a string of brackets '()', '{}', '[]' is balanced.",
+        "{[()]}",
+        "Balanced",
+        "Push opening brackets onto a stack; pop and match on closing brackets.",
+        "bool isBalanced(string s) {\n    stack<char> st;\n    for(char c : s) {\n        if(c == '(' || c == '{' || c == '[') st.push(c);\n        else {\n            if(st.empty()) return false;\n            char top = st.top(); st.pop();\n            if((c == ')' && top != '(') || (c == '}' && top != '{') || (c == ']' && top != '[')) return false;\n        }\n    }\n    return st.empty();\n}",
+        "https://www.hackerrank.com/challenges/balanced-brackets/problem"};
+
+    // --- Topic 6: Queues ---
+    problems[idx++] = {
+        "Implement Queue using Array",
         6,
-        "Implement enqueue and dequeue operations for a fixed-size circular queue using modulo arithmetic.",
-        "Input: Enqueue(10), Enqueue(20), Dequeue(), Enqueue(30)",
-        "Output: Dequeued: 10, Front Element: 20",
-        "Use (rear + 1) % SIZE for enqueue and (front + 1) % SIZE for dequeue.",
-        "class CircularQueue {\n"
-        "    int arr[5], front = -1, rear = -1;\n"
-        "public:\n"
-        "    bool enqueue(int x) {\n"
-        "        if ((rear + 1) % 5 == front) return false; // Full\n"
-        "        if (front == -1) front = 0;\n"
-        "        rear = (rear + 1) % 5; arr[rear] = x; return true;\n"
-        "    }\n"
-        "    int dequeue() {\n"
-        "        if (front == -1) return -1; // Empty\n"
-        "        int val = arr[front];\n"
-        "        if (front == rear) front = rear = -1;\n"
-        "        else front = (front + 1) % 5;\n"
-        "        return val;\n"
-        "    }\n"
-        "};"};
-    problems[11] = {
-        "Generate Binary Numbers from 1 to N using a Queue",
+        "Implement enqueue and dequeue operations using an array.",
+        "enqueue(5), enqueue(10), dequeue()",
+        "Dequeued: 5",
+        "Maintain 'front' and 'rear' indices.",
+        "class Queue {\n    int front = 0, rear = 0, arr[100];\npublic:\n    void enqueue(int x) { arr[rear++] = x; }\n    int dequeue() { return (front < rear) ? arr[front++] : -1; }\n};",
+        "https://www.hackerrank.com/challenges/queue-using-two-stacks/problem"};
+
+    problems[idx++] = {
+        "Circular Queue",
         6,
-        "Generate and display binary representations for numbers 1 through N using a FIFO queue.",
-        "Input: N = 4",
-        "Output: 1, 10, 11, 100",
-        "Enqueue \"1\". In each iteration, dequeue string s, print it, then enqueue s + \"0\" and s + \"1\".",
-        "void generateBinary(int n) {\n"
-        "    string q[100]; int front = 0, rear = 0;\n"
-        "    q[rear++] = \"1\";\n"
-        "    for (int i = 1; i <= n; i++) {\n"
-        "        string s = q[front++];\n"
-        "        cout << s << \" \";\n"
-        "        if (rear < 98) {\n"
-        "            q[rear++] = s + \"0\";\n"
-        "            q[rear++] = s + \"1\";\n"
-        "        }\n"
-        "    }\n"
-        "}"};
+        "Implement a circular queue to avoid space wastage in standard linear queue.",
+        "Capacity: 3, enqueue 1, 2, 3, dequeue, enqueue 4",
+        "Rear wraps around to index 0",
+        "Use modulo arithmetic: (rear + 1) % capacity.",
+        "void enqueue(int x) {\n    if((rear + 1) % cap == front) return; // Full\n    arr[rear] = x;\n    rear = (rear + 1) % cap;\n}",
+        "https://leetcode.com/problems/design-circular-queue/"};
 }
 
 void CodingPractice::startPracticeSession()
 {
-    int choice = 0;
+    int choice;
+
     do
     {
-        cout << "\n================ CODING PRACTICE MODULE (12 QUESTIONS) ================\n";
-        for (int i = 0; i < TOTAL_PRACTICE_PROBLEMS; i++)
-        {
-            cout << (i + 1) << ". " << problems[i].title << "\n";
-        }
-        cout << "13. Return to Main Menu\n";
-        cout << "------------------------------------------------------------------------\n";
-        cout << "Select a problem to solve and inspect (1-13): ";
+        cout << "\n========== CODING PRACTICE ==========\n";
+        cout << "1. Arrays\n";
+        cout << "2. Searching\n";
+        cout << "3. Sorting\n";
+        cout << "4. Linked Lists\n";
+        cout << "5. Stacks\n";
+        cout << "6. Queues\n";
+        cout << "7. Back\n";
+        cout << "Enter choice: ";
+        cin >> choice;
 
-        if (!(cin >> choice))
+        if (choice >= 1 && choice <= 6)
         {
-            cin.clear();
-            cin.ignore(1000, '\n');
-            cout << "Invalid input! Enter a number between 1 and 13.\n";
-            continue;
+            showTopicProblems(choice);
+        }
+        else if (choice != 7)
+        {
+            cout << "Invalid choice!\n";
         }
 
-        if (choice >= 1 && choice <= 12)
+    } while (choice != 7);
+}
+
+void CodingPractice::showTopicProblems(int topicID)
+{
+    int count = 0;
+    int choice;
+
+    cout << "\n========== PROBLEMS ==========\n";
+
+    for (int i = 0; i < TOTAL_PRACTICE_PROBLEMS; i++)
+    {
+        if (problems[i].topicID == topicID)
         {
-            displayProblem(choice - 1);
+            count++;
+            cout << count << ". " << problems[i].title << "\n";
         }
-        else if (choice == 13)
+    }
+
+    cout << "3. Back\n";
+    cout << "Enter choice: ";
+    cin >> choice;
+
+    if (choice == 3)
+    {
+        return;
+    }
+
+    if (choice < 1 || choice > 2)
+    {
+        cout << "Invalid choice!\n";
+        return;
+    }
+
+    count = 0;
+
+    for (int i = 0; i < TOTAL_PRACTICE_PROBLEMS; i++)
+    {
+        if (problems[i].topicID == topicID)
         {
-            cout << "Returning to Main Menu...\n";
+            count++;
+
+            if (count == choice)
+            {
+                displayProblem(i);
+                return;
+            }
         }
-        else
-        {
-            cout << "Invalid choice! Enter a value between 1 and 13.\n";
-        }
-    } while (choice != 13);
+    }
 }
 
 void CodingPractice::displayProblem(int index)
 {
-    cout << "\n========================================================================\n";
-    cout << "Problem " << (index + 1) << ": " << problems[index].title << "\n";
-    cout << "------------------------------------------------------------------------\n";
-    cout << "[Problem Statement]:\n  " << problems[index].description << "\n\n";
-    cout << "[Sample Input]:\n  " << problems[index].sampleInput << "\n\n";
-    cout << "[Sample Output]:\n  " << problems[index].sampleOutput << "\n\n";
-    cout << "[Conceptual Hint]:\n  " << problems[index].hint << "\n\n";
-    cout << "[Custom Reference Solution (No STL)]:\n"
-         << problems[index].referenceSolution << "\n";
-    cout << "========================================================================\n";
+    int choice;
+
+    do
+    {
+        cout << "\n========== CODING PROBLEM ==========\n";
+        cout << "Title: " << problems[index].title << "\n\n";
+
+        cout << "Problem:\n";
+        cout << problems[index].description << "\n\n";
+
+        cout << "Sample Input:\n";
+        cout << problems[index].sampleInput << "\n\n";
+
+        cout << "Sample Output:\n";
+        cout << problems[index].sampleOutput << "\n\n";
+
+        cout << "Hint:\n";
+        cout << problems[index].hint << "\n\n";
+
+        cout << "1. View Solution\n";
+        cout << "2. Practice Online\n";
+        cout << "3. Back\n";
+        cout << "Enter choice: ";
+
+        cin >> choice;
+
+        if (choice == 1)
+        {
+            cout << "\n========== REFERENCE SOLUTION ==========\n";
+            cout << problems[index].referenceSolution << "\n";
+        }
+        else if (choice == 2)
+        {
+            showPracticeLink(index);
+        }
+        else if (choice != 3)
+        {
+            cout << "Invalid choice!\n";
+        }
+
+    } while (choice != 3);
+}
+
+void CodingPractice::showPracticeLink(int index)
+{
+    cout << "\n========== PRACTICE ONLINE ==========\n";
+    cout << "Hold Ctrl and Click this link to open the challenge:\n";
+    cout << problems[index].practiceUrl << "\n\n";
 }
