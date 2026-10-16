@@ -6,6 +6,7 @@
 #include "linearDS.hpp"
 #include "FileManager.hpp"
 #include "recommendation.hpp"
+#include "CodingPractice.hpp"
 
 using namespace std;
 
@@ -35,6 +36,7 @@ int main()
     LinearDS ds;
     FileManager fm;
     Recommendation r;
+    CodingPractice cp;
 
     int choice = 0;
 
@@ -63,10 +65,37 @@ int main()
             break;
 
         case 3:
-            cout << "\nPRACTICE QUESTIONS SELECTED\n";
-            p.startQuiz();
-            perf.setPerformance(p.getScore(), p.getTotalQuestions());
+        {
+            int practiceChoice;
+
+            do
+            {
+                cout << "\n========== PRACTICE ==========\n";
+                cout << "1. MCQ Quiz\n";
+                cout << "2. Coding Practice\n";
+                cout << "3. Back\n";
+                cout << "Enter choice: ";
+
+                cin >> practiceChoice;
+
+                if (practiceChoice == 1)
+                {
+                    p.startQuiz();
+                    perf.setPerformance(p.getScore(), p.getTotalQuestions());
+                }
+                else if (practiceChoice == 2)
+                {
+                    cp.startPracticeSession();
+                }
+                else if (practiceChoice != 3)
+                {
+                    cout << "Invalid choice!\n";
+                }
+
+            } while (practiceChoice != 3);
+
             break;
+        }
 
         case 4:
             cout << "\nPERFORMANCE MODULE SELECTED\n";
