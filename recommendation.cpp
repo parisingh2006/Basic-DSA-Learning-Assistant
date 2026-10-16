@@ -43,7 +43,8 @@ void Recommendation::suggestTopic(int score, int totalQuestions, bool quizAttemp
 }
 
 void Recommendation::suggestTopic(const ProblemBank &p)
+// accepts a ProblemBank object and extracts the required information from it.
 {
-    ProblemBank nonConstP = p;
+    ProblemBank nonConstP = p; // nonConstP because i am copying p i.e. making it non-constant
     suggestTopic(nonConstP.getScore(), nonConstP.getTotalQuestions(), nonConstP.hasAttemptedQuiz());
 }
