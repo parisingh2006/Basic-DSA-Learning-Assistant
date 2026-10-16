@@ -7,6 +7,7 @@ public:
     void showTopicDetails(int choice);
 
 private:
+    // topics explainations functions kept as private
     void explainArrays();
     void explainSearching();
     void explainSorting();
