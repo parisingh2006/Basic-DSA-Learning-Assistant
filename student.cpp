@@ -1,9 +1,12 @@
 #include <iostream>
 #include "Student.hpp"
+// included Student.hpp as the class declaration and implementation of functions.
 
 using namespace std;
 
-Student::Student()
+// :: => scope resolution operator used for defining outside the class
+
+Student::Student() // Constructor defination of Student class
 {
     studentID = 0;
     studentName[0] = '\0';
@@ -15,10 +18,11 @@ void Student::registerStudent()
     cout << "\nEnter Student ID (positive integer): ";
     cin >> studentID;
 
-    if (cin.fail())
+    if (cin.fail()) // gives true if input fails
     {
-        cin.clear();
-        cin.ignore(1000, '\n');
+        cin.clear();            // unfreezes cin or sets error state back to normal
+        cin.ignore(1000, '\n'); // deletes the leftover wrong input
+        // it will ignore upto 1000 characters , \n represents new line
         cout << "Invalid Student ID! Must be a valid number.\n";
         return;
     }
@@ -29,7 +33,8 @@ void Student::registerStudent()
         cout << "Student ID must be positive!\n";
         return;
     }
-
+    
+    // after reading integer , using cin.ignore again to remove remaining newline
     cin.ignore(1000, '\n');
 
     cout << "Enter Student Full Name: ";
@@ -59,6 +64,7 @@ void Student::displayStudent() const
     cout << "===================================================\n";
 }
 
+// const use because we dont want to modify any further
 bool Student::isRegistered() const
 {
     return registered;
