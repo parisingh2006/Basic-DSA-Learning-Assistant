@@ -1,7 +1,7 @@
 #include "FileManager.hpp"
 #include <iostream>
-#include <fstream>
-#include <string>
+#include <fstream> // file reading & writing
+#include <string>  // store student name while loading
 
 using namespace std;
 
