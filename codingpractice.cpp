@@ -3,7 +3,7 @@
 
 using namespace std;
 
-CodingPractice::CodingPractice()
+CodingPractice::CodingPractice() // Constructor
 {
     initializeProblems();
 }
