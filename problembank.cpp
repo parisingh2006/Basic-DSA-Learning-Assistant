@@ -297,7 +297,7 @@ void ProblemBank::createQuestionBank()
         "A circular queue reuses positions that become available after dequeue operations.",
         2};
 
-    // ================= BST =================
+    // ================= BINARY SEARCH TREE =================
 
     questionBank[questionCount++] = {
         7,
@@ -380,22 +380,31 @@ const char *ProblemBank::getTopicName(int topicIndex)
     {
     case 0:
         return "Arrays";
+
     case 1:
         return "Strings";
+
     case 2:
         return "Searching";
+
     case 3:
         return "Sorting";
+
     case 4:
         return "Linked Lists";
+
     case 5:
         return "Stack";
+
     case 6:
         return "Queue";
+
     case 7:
         return "Binary Search Tree";
+
     case 8:
         return "Recursion";
+
     default:
         return "Unknown";
     }
@@ -424,9 +433,13 @@ int ProblemBank::askQuestion(
     cout << "Difficulty : ";
 
     if (question.difficulty == 1)
+    {
         cout << "Easy\n";
+    }
     else
+    {
         cout << "Medium\n";
+    }
 
     cout << "----------------------------------------------------\n";
     cout << question.question << "\n\n";
@@ -456,6 +469,7 @@ int ProblemBank::askQuestion(
     {
         cout << "\nCorrect answer!\n";
         cout << "Explanation: " << question.explanation << "\n";
+
         return 1;
     }
 
@@ -493,7 +507,9 @@ void ProblemBank::runTopicQuiz(int topicIndex)
     for (int i = 0; i < questionCount; i++)
     {
         if (questionBank[i].topicIndex != topicIndex)
+        {
             continue;
+        }
 
         int result = askQuestion(
             questionBank[i],
@@ -593,7 +609,8 @@ void ProblemBank::showQuizMenu()
             resetPerformance();
 
             cout << "\nStarting mixed quiz with "
-                 << TOTAL_QUESTIONS << " questions.\n";
+                 << TOTAL_QUESTIONS
+                 << " questions.\n";
 
             runMixedQuiz();
 
@@ -609,7 +626,8 @@ void ProblemBank::showQuizMenu()
             resetPerformance();
 
             cout << "\nStarting quiz: "
-                 << getTopicName(topicIndex) << "\n";
+                 << getTopicName(topicIndex)
+                 << "\n";
 
             runTopicQuiz(topicIndex);
 
@@ -648,17 +666,32 @@ void ProblemBank::displayScore()
     cout << "\n====================================================\n";
     cout << "                 QUIZ PERFORMANCE\n";
     cout << "====================================================\n";
-    cout << "Score     : " << score << " / " << totalQuestions << "\n";
-    cout << "Accuracy  : " << percentage << "%\n";
+    cout << "Score     : "
+         << score
+         << " / "
+         << totalQuestions
+         << "\n";
+
+    cout << "Accuracy  : "
+         << percentage
+         << "%\n";
 
     if (percentage >= 80)
+    {
         cout << "Level     : Excellent\n";
+    }
     else if (percentage >= 60)
+    {
         cout << "Level     : Good\n";
+    }
     else if (percentage >= 40)
+    {
         cout << "Level     : Needs Improvement\n";
+    }
     else
+    {
         cout << "Level     : Needs More Practice\n";
+    }
 
     cout << "\n--------------- Topic-wise Performance -------------\n";
 
@@ -705,7 +738,9 @@ bool ProblemBank::hasAttemptedQuiz()
 int ProblemBank::getTopicScore(int topicIndex)
 {
     if (topicIndex < 0 || topicIndex >= TOPIC_COUNT)
+    {
         return 0;
+    }
 
     return topicScore[topicIndex];
 }
@@ -713,7 +748,9 @@ int ProblemBank::getTopicScore(int topicIndex)
 int ProblemBank::getTopicQuestions(int topicIndex)
 {
     if (topicIndex < 0 || topicIndex >= TOPIC_COUNT)
+    {
         return 0;
+    }
 
     return topicQuestions[topicIndex];
 }
