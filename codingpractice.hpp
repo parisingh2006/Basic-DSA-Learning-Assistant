@@ -1,35 +1,33 @@
 #pragma once
-#include <string>
 
-// created a structure first so that can group related variables together.
 struct CodingProblem
 {
-    std::string title;
-    int topicID;
-    // std::string means that string belongs to standard namespace
-    std::string description;
-    std::string sampleInput;
-    std::string sampleOutput;
-    std::string hint;
-    std::string referenceSolution;
-    std::string practiceUrl;
+    const char *title;
+    const char *topic;
+    const char *difficulty;
+    const char *description;
+    const char *inputFormat;
+    const char *outputFormat;
+    const char *example;
+    const char *hint;
+    const char *referenceSolution;
+    const char *practiceUrl;
 };
 
 class CodingPractice
 {
 private:
-    static const int TOTAL_PRACTICE_PROBLEMS = 12;
-    // 12 problems for now will be changing later
+    static const int TOTAL_PROBLEMS = 18;
 
-    CodingProblem problems[TOTAL_PRACTICE_PROBLEMS]; // array of objects
+    CodingProblem problems[TOTAL_PROBLEMS];
 
     void initializeProblems();
-    void showTopicProblems(int topicID);
-    void showPracticeLink(int index);
+    void showPracticeMenu();
+    void showTopicProblems(int topicChoice);
+    void displayProblem(int index);
 
 public:
     CodingPractice();
 
     void startPracticeSession();
-    void displayProblem(int index);
 };

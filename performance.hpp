@@ -1,18 +1,29 @@
 #pragma once
-// #pragma once is used to ensure that this header file is included only once during compilation
+
 class Performance
 {
 private:
-    // these members are private to maintain encapsulation
     int score;
     int totalQuestions;
-    bool performanceAvailable;
+    bool quizAttempted;
+
+    int topicScore[9];
+    int topicQuestions[9];
 
 public:
     Performance();
 
-    void setPerformance(int s, int total);
-    // s is for storing students score's
-    // total is for total number of questions
+    void setPerformance(int score, int totalQuestions);
+
+    void setTopicPerformance(
+        int topicIndex,
+        int score,
+        int totalQuestions);
+
     void displayPerformance();
+
+    int calculatePercentage();
+
+    int getWeakestTopic();
+    int getStrongestTopic();
 };

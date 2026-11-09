@@ -1,372 +1,876 @@
 #include <iostream>
-#include "LinearDS.hpp"
+#include "linearDS.hpp"
 
 using namespace std;
 
 LinearDS::LinearDS()
 {
-    sllHead = nullptr;
-    // nullptr means pointer is not pointing to any node i.e. list is empty
-    dllHead = nullptr;
-    top = -1;
-    front = -1;
-    rear = -1;
+    singlyHead = NULL;
+    doublyHead = NULL;
+
+    stackTop = -1;
+
+    queueFront = 0;
+    queueRear = -1;
+    queueCount = 0;
 }
 
-LinearDS::~LinearDS()
+/* =========================================================
+   SINGLY LINKED LIST
+   ========================================================= */
+
+void LinearDS::insertSinglyAtBeginning(int value)
 {
-    clearSLL();
-    clearDLL();
+    SinglyNode *newNode = new SinglyNode;
+
+    newNode->data = value;
+    newNode->next = singlyHead;
+
+    singlyHead = newNode;
+
+    cout << "Node inserted at beginning successfully.\n";
 }
 
-void LinearDS::clearSLL()
+void LinearDS::insertSinglyAtEnd(int value)
 {
-    SLLNode *curr = sllHead;
-    while (curr != nullptr)
+    SinglyNode *newNode = new SinglyNode;
+
+    newNode->data = value;
+    newNode->next = NULL;
+
+    if (singlyHead == NULL)
     {
-        SLLNode *nxt = curr->next;
-        delete curr;
-        curr = nxt;
+        singlyHead = newNode;
+        cout << "Node inserted successfully.\n";
+        return;
     }
-    sllHead = nullptr;
+
+    SinglyNode *current = singlyHead;
+
+    while (current->next != NULL)
+    {
+        current = current->next;
+    }
+
+    current->next = newNode;
+
+    cout << "Node inserted at end successfully.\n";
 }
 
-void LinearDS::clearDLL()
+void LinearDS::deleteSinglyFromBeginning()
 {
-    DLLNode *curr = dllHead;
-    while (curr != nullptr)
+    if (singlyHead == NULL)
     {
-        DLLNode *nxt = curr->next;
-        delete curr;
-        curr = nxt;
+        cout << "Singly linked list is empty.\n";
+        return;
     }
-    dllHead = nullptr;
+
+    SinglyNode *temporary = singlyHead;
+
+    singlyHead = singlyHead->next;
+
+    cout << "Deleted value: " << temporary->data << "\n";
+
+    delete temporary;
 }
 
-void LinearDS::insertNodeSLL(int val)
+void LinearDS::deleteSinglyByValue(int value)
 {
-    SLLNode *newNode = new SLLNode{val, nullptr};
-    if (!sllHead)
+    if (singlyHead == NULL)
     {
-        sllHead = newNode;
+        cout << "Singly linked list is empty.\n";
+        return;
     }
-    else
+
+    if (singlyHead->data == value)
     {
-        SLLNode *temp = sllHead;
-        while (temp->next != nullptr)
+        SinglyNode *temporary = singlyHead;
+
+        singlyHead = singlyHead->next;
+
+        delete temporary;
+
+        cout << "Node deleted successfully.\n";
+        return;
+    }
+
+    SinglyNode *current = singlyHead;
+
+    while (current->next != NULL &&
+           current->next->data != value)
+    {
+        current = current->next;
+    }
+
+    if (current->next == NULL)
+    {
+        cout << "Value not found in the list.\n";
+        return;
+    }
+
+    SinglyNode *temporary = current->next;
+
+    current->next = temporary->next;
+
+    delete temporary;
+
+    cout << "Node deleted successfully.\n";
+}
+
+void LinearDS::displaySingly()
+{
+    if (singlyHead == NULL)
+    {
+        cout << "Singly linked list is empty.\n";
+        return;
+    }
+
+    SinglyNode *current = singlyHead;
+
+    cout << "Singly Linked List:\n";
+
+    while (current != NULL)
+    {
+        cout << current->data;
+
+        if (current->next != NULL)
         {
-            temp = temp->next;
+            cout << " -> ";
         }
-        temp->next = newNode;
+
+        current = current->next;
     }
-    cout << "Inserted " << val << " into Singly Linked List.\n";
+
+    cout << " -> NULL\n";
 }
 
-void LinearDS::deleteNodeSLL(int val)
+void LinearDS::singlyLinkedListMenu()
 {
-    if (!sllHead)
-    {
-        cout << "Singly Linked List is empty!\n";
-        return;
-    }
+    int choice = 0;
 
-    if (sllHead->data == val)
+    do
     {
-        SLLNode *toDelete = sllHead;
-        sllHead = sllHead->next;
-        delete toDelete;
-        cout << "Deleted " << val << " from Singly Linked List.\n";
-        return;
-    }
+        cout << "\n========================================\n";
+        cout << "        SINGLY LINKED LIST\n";
+        cout << "========================================\n";
+        cout << "1. Insert at Beginning\n";
+        cout << "2. Insert at End\n";
+        cout << "3. Delete from Beginning\n";
+        cout << "4. Delete by Value\n";
+        cout << "5. Display List\n";
+        cout << "6. Back\n";
+        cout << "========================================\n";
+        cout << "Enter your choice: ";
 
-    SLLNode *curr = sllHead;
-    while (curr->next != nullptr && curr->next->data != val)
-    {
-        curr = curr->next;
-    }
-
-    if (curr->next == nullptr)
-    {
-        cout << "Value " << val << " not found in Singly Linked List.\n";
-    }
-    else
-    {
-        SLLNode *toDelete = curr->next;
-        curr->next = curr->next->next;
-        delete toDelete;
-        cout << "Deleted " << val << " from Singly Linked List.\n";
-    }
-}
-
-void LinearDS::displayListSLL() const
-{
-    if (!sllHead)
-    {
-        cout << "Singly Linked List is empty.\n";
-        return;
-    }
-    cout << "Singly Linked List: ";
-    SLLNode *temp = sllHead;
-    while (temp != nullptr)
-    {
-        cout << temp->data << " -> ";
-        temp = temp->next;
-    }
-    cout << "NULL\n";
-}
-
-void LinearDS::insertNodeDLL(int val)
-{
-    DLLNode *newNode = new DLLNode{val, nullptr, nullptr};
-    if (!dllHead)
-    {
-        dllHead = newNode;
-    }
-    else
-    {
-        DLLNode *temp = dllHead;
-        while (temp->next != nullptr)
+        while (!(cin >> choice))
         {
-            temp = temp->next;
+            cin.clear();
+            cin.ignore(1000, '\n');
+
+            cout << "Invalid input. Enter a number from 1 to 6: ";
         }
-        temp->next = newNode;
-        newNode->prev = temp;
-    }
-    cout << "Inserted " << val << " into Doubly Linked List.\n";
+
+        int value;
+
+        switch (choice)
+        {
+        case 1:
+
+            cout << "Enter value: ";
+
+            while (!(cin >> value))
+            {
+                cin.clear();
+                cin.ignore(1000, '\n');
+
+                cout << "Invalid value. Enter an integer: ";
+            }
+
+            insertSinglyAtBeginning(value);
+            break;
+
+        case 2:
+
+            cout << "Enter value: ";
+
+            while (!(cin >> value))
+            {
+                cin.clear();
+                cin.ignore(1000, '\n');
+
+                cout << "Invalid value. Enter an integer: ";
+            }
+
+            insertSinglyAtEnd(value);
+            break;
+
+        case 3:
+
+            deleteSinglyFromBeginning();
+            break;
+
+        case 4:
+
+            cout << "Enter value to delete: ";
+
+            while (!(cin >> value))
+            {
+                cin.clear();
+                cin.ignore(1000, '\n');
+
+                cout << "Invalid value. Enter an integer: ";
+            }
+
+            deleteSinglyByValue(value);
+            break;
+
+        case 5:
+
+            displaySingly();
+            break;
+
+        case 6:
+
+            cout << "Returning to Data Structure Workbench...\n";
+            break;
+
+        default:
+
+            cout << "Invalid choice. Please select 1 to 6.\n";
+        }
+
+    } while (choice != 6);
 }
 
-void LinearDS::deleteNodeDLL(int val)
+/* =========================================================
+   DOUBLY LINKED LIST
+   ========================================================= */
+
+void LinearDS::insertDoublyAtBeginning(int value)
 {
-    if (!dllHead)
+    DoublyNode *newNode = new DoublyNode;
+
+    newNode->data = value;
+    newNode->previous = NULL;
+    newNode->next = doublyHead;
+
+    if (doublyHead != NULL)
     {
-        cout << "Doubly Linked List is empty!\n";
+        doublyHead->previous = newNode;
+    }
+
+    doublyHead = newNode;
+
+    cout << "Node inserted at beginning successfully.\n";
+}
+
+void LinearDS::insertDoublyAtEnd(int value)
+{
+    DoublyNode *newNode = new DoublyNode;
+
+    newNode->data = value;
+    newNode->next = NULL;
+
+    if (doublyHead == NULL)
+    {
+        newNode->previous = NULL;
+        doublyHead = newNode;
+
+        cout << "Node inserted successfully.\n";
         return;
     }
 
-    DLLNode *curr = dllHead;
-    while (curr != nullptr && curr->data != val)
+    DoublyNode *current = doublyHead;
+
+    while (current->next != NULL)
     {
-        curr = curr->next;
+        current = current->next;
     }
 
-    if (!curr)
+    newNode->previous = current;
+
+    current->next = newNode;
+
+    cout << "Node inserted at end successfully.\n";
+}
+
+void LinearDS::deleteDoublyFromBeginning()
+{
+    if (doublyHead == NULL)
     {
-        cout << "Value " << val << " not found in Doubly Linked List.\n";
+        cout << "Doubly linked list is empty.\n";
         return;
     }
 
-    if (curr == dllHead)
+    DoublyNode *temporary = doublyHead;
+
+    doublyHead = doublyHead->next;
+
+    if (doublyHead != NULL)
     {
-        dllHead = curr->next;
-        if (dllHead)
-            dllHead->prev = nullptr;
+        doublyHead->previous = NULL;
+    }
+
+    cout << "Deleted value: " << temporary->data << "\n";
+
+    delete temporary;
+}
+
+void LinearDS::deleteDoublyByValue(int value)
+{
+    if (doublyHead == NULL)
+    {
+        cout << "Doubly linked list is empty.\n";
+        return;
+    }
+
+    DoublyNode *current = doublyHead;
+
+    while (current != NULL &&
+           current->data != value)
+    {
+        current = current->next;
+    }
+
+    if (current == NULL)
+    {
+        cout << "Value not found in the list.\n";
+        return;
+    }
+
+    if (current->previous != NULL)
+    {
+        current->previous->next = current->next;
     }
     else
     {
-        if (curr->prev)
-            curr->prev->next = curr->next;
-        if (curr->next)
-            curr->next->prev = curr->prev;
+        doublyHead = current->next;
     }
 
-    delete curr;
-    cout << "Deleted " << val << " from Doubly Linked List.\n";
+    if (current->next != NULL)
+    {
+        current->next->previous = current->previous;
+    }
+
+    delete current;
+
+    cout << "Node deleted successfully.\n";
 }
 
-void LinearDS::displayListDLL() const
+void LinearDS::displayDoublyForward()
 {
-    if (!dllHead)
+    if (doublyHead == NULL)
     {
-        cout << "Doubly Linked List is empty.\n";
+        cout << "Doubly linked list is empty.\n";
         return;
     }
-    cout << "Doubly Linked List: NULL <-> ";
-    DLLNode *temp = dllHead;
-    while (temp != nullptr)
+
+    DoublyNode *current = doublyHead;
+
+    cout << "Forward Direction:\n";
+
+    while (current != NULL)
     {
-        cout << temp->data << " <-> ";
-        temp = temp->next;
+        cout << current->data;
+
+        if (current->next != NULL)
+        {
+            cout << " <-> ";
+        }
+
+        current = current->next;
     }
-    cout << "NULL\n";
+
+    cout << " -> NULL\n";
 }
 
-void LinearDS::push(int val)
+void LinearDS::displayDoublyBackward()
 {
-    if (top >= STACK_CAPACITY - 1)
+    if (doublyHead == NULL)
     {
-        cout << "Stack Overflow! Cannot push onto full stack.\n";
+        cout << "Doubly linked list is empty.\n";
         return;
     }
-    stack[++top] = val;
-    cout << "Pushed " << val << " onto Stack.\n";
+
+    DoublyNode *current = doublyHead;
+
+    while (current->next != NULL)
+    {
+        current = current->next;
+    }
+
+    cout << "Backward Direction:\n";
+
+    while (current != NULL)
+    {
+        cout << current->data;
+
+        if (current->previous != NULL)
+        {
+            cout << " <-> ";
+        }
+
+        current = current->previous;
+    }
+
+    cout << " -> NULL\n";
+}
+
+void LinearDS::doublyLinkedListMenu()
+{
+    int choice = 0;
+
+    do
+    {
+        cout << "\n========================================\n";
+        cout << "         DOUBLY LINKED LIST\n";
+        cout << "========================================\n";
+        cout << "1. Insert at Beginning\n";
+        cout << "2. Insert at End\n";
+        cout << "3. Delete from Beginning\n";
+        cout << "4. Delete by Value\n";
+        cout << "5. Display Forward\n";
+        cout << "6. Display Backward\n";
+        cout << "7. Back\n";
+        cout << "========================================\n";
+        cout << "Enter your choice: ";
+
+        while (!(cin >> choice))
+        {
+            cin.clear();
+            cin.ignore(1000, '\n');
+
+            cout << "Invalid input. Enter a number from 1 to 7: ";
+        }
+
+        int value;
+
+        switch (choice)
+        {
+        case 1:
+
+            cout << "Enter value: ";
+
+            while (!(cin >> value))
+            {
+                cin.clear();
+                cin.ignore(1000, '\n');
+
+                cout << "Invalid value. Enter an integer: ";
+            }
+
+            insertDoublyAtBeginning(value);
+            break;
+
+        case 2:
+
+            cout << "Enter value: ";
+
+            while (!(cin >> value))
+            {
+                cin.clear();
+                cin.ignore(1000, '\n');
+
+                cout << "Invalid value. Enter an integer: ";
+            }
+
+            insertDoublyAtEnd(value);
+            break;
+
+        case 3:
+
+            deleteDoublyFromBeginning();
+            break;
+
+        case 4:
+
+            cout << "Enter value to delete: ";
+
+            while (!(cin >> value))
+            {
+                cin.clear();
+                cin.ignore(1000, '\n');
+
+                cout << "Invalid value. Enter an integer: ";
+            }
+
+            deleteDoublyByValue(value);
+            break;
+
+        case 5:
+
+            displayDoublyForward();
+            break;
+
+        case 6:
+
+            displayDoublyBackward();
+            break;
+
+        case 7:
+
+            cout << "Returning to Data Structure Workbench...\n";
+            break;
+
+        default:
+
+            cout << "Invalid choice. Please select 1 to 7.\n";
+        }
+
+    } while (choice != 7);
+}
+
+/* =========================================================
+   STACK
+   ========================================================= */
+
+void LinearDS::push(int value)
+{
+    if (stackTop == STACK_SIZE - 1)
+    {
+        cout << "Stack Overflow. Cannot push more elements.\n";
+        return;
+    }
+
+    stackTop++;
+
+    stackArray[stackTop] = value;
+
+    cout << "Value pushed successfully.\n";
 }
 
 void LinearDS::pop()
 {
-    if (top < 0)
+    if (stackTop == -1)
     {
-        cout << "Stack Underflow! Stack is empty.\n";
+        cout << "Stack Underflow. Stack is empty.\n";
         return;
     }
-    cout << "Popped value: " << stack[top--] << "\n";
+
+    cout << "Popped value: "
+         << stackArray[stackTop]
+         << "\n";
+
+    stackTop--;
 }
 
-void LinearDS::displayStack() const
+void LinearDS::displayStack()
 {
-    if (top < 0)
+    if (stackTop == -1)
     {
         cout << "Stack is empty.\n";
         return;
     }
-    cout << "Stack (Top to Bottom): ";
-    for (int i = top; i >= 0; i--)
+
+    cout << "Stack from TOP to BOTTOM:\n";
+
+    for (int i = stackTop; i >= 0; i--)
     {
-        cout << stack[i] << " ";
+        cout << stackArray[i] << "\n";
     }
-    cout << "\n";
 }
 
-void LinearDS::enqueue(int val)
+void LinearDS::stackMenu()
 {
-    if ((rear + 1) % QUEUE_CAPACITY == front)
+    int choice = 0;
+
+    do
     {
-        cout << "Queue Overflow! Circular Queue is full.\n";
+        cout << "\n========================================\n";
+        cout << "                STACK\n";
+        cout << "========================================\n";
+        cout << "1. Push\n";
+        cout << "2. Pop\n";
+        cout << "3. Display\n";
+        cout << "4. Back\n";
+        cout << "========================================\n";
+        cout << "Enter your choice: ";
+
+        while (!(cin >> choice))
+        {
+            cin.clear();
+            cin.ignore(1000, '\n');
+
+            cout << "Invalid input. Enter a number from 1 to 4: ";
+        }
+
+        int value;
+
+        switch (choice)
+        {
+        case 1:
+
+            cout << "Enter value: ";
+
+            while (!(cin >> value))
+            {
+                cin.clear();
+                cin.ignore(1000, '\n');
+
+                cout << "Invalid value. Enter an integer: ";
+            }
+
+            push(value);
+            break;
+
+        case 2:
+
+            pop();
+            break;
+
+        case 3:
+
+            displayStack();
+            break;
+
+        case 4:
+
+            cout << "Returning to Data Structure Workbench...\n";
+            break;
+
+        default:
+
+            cout << "Invalid choice. Please select 1 to 4.\n";
+        }
+
+    } while (choice != 4);
+}
+
+/* =========================================================
+   CIRCULAR QUEUE
+   ========================================================= */
+
+void LinearDS::enqueue(int value)
+{
+    if (queueCount == QUEUE_SIZE)
+    {
+        cout << "Queue Overflow. Circular queue is full.\n";
         return;
     }
-    if (front == -1)
-    {
-        front = 0;
-    }
-    rear = (rear + 1) % QUEUE_CAPACITY;
-    queue[rear] = val;
-    cout << "Enqueued " << val << " into Circular Queue.\n";
+
+    queueRear = (queueRear + 1) % QUEUE_SIZE;
+
+    circularQueue[queueRear] = value;
+
+    queueCount++;
+
+    cout << "Value inserted into circular queue.\n";
 }
 
 void LinearDS::dequeue()
 {
-    if (front == -1)
+    if (queueCount == 0)
     {
-        cout << "Queue Underflow! Circular Queue is empty.\n";
+        cout << "Queue Underflow. Circular queue is empty.\n";
         return;
     }
-    int val = queue[front];
-    if (front == rear)
+
+    cout << "Deleted value: "
+         << circularQueue[queueFront]
+         << "\n";
+
+    queueFront = (queueFront + 1) % QUEUE_SIZE;
+
+    queueCount--;
+
+    if (queueCount == 0)
     {
-        front = -1;
-        rear = -1;
+        queueFront = 0;
+        queueRear = -1;
     }
-    else
-    {
-        front = (front + 1) % QUEUE_CAPACITY;
-    }
-    cout << "Dequeued value: " << val << "\n";
 }
 
-void LinearDS::displayQueue() const
+void LinearDS::displayCircularQueue()
 {
-    if (front == -1)
+    if (queueCount == 0)
     {
-        cout << "Circular Queue is empty.\n";
+        cout << "Circular queue is empty.\n";
         return;
     }
-    cout << "Circular Queue elements: ";
-    int i = front;
-    while (true)
+
+    cout << "Circular Queue:\n";
+
+    int index = queueFront;
+
+    for (int i = 0; i < queueCount; i++)
     {
-        cout << queue[i] << " ";
-        if (i == rear)
-            break;
-        i = (i + 1) % QUEUE_CAPACITY;
+        cout << circularQueue[index];
+
+        if (i < queueCount - 1)
+        {
+            cout << " <- ";
+        }
+
+        index = (index + 1) % QUEUE_SIZE;
     }
+
     cout << "\n";
 }
+
+void LinearDS::circularQueueMenu()
+{
+    int choice = 0;
+
+    do
+    {
+        cout << "\n========================================\n";
+        cout << "            CIRCULAR QUEUE\n";
+        cout << "========================================\n";
+        cout << "1. Enqueue\n";
+        cout << "2. Dequeue\n";
+        cout << "3. Display\n";
+        cout << "4. Back\n";
+        cout << "========================================\n";
+        cout << "Enter your choice: ";
+
+        while (!(cin >> choice))
+        {
+            cin.clear();
+            cin.ignore(1000, '\n');
+
+            cout << "Invalid input. Enter a number from 1 to 4: ";
+        }
+
+        int value;
+
+        switch (choice)
+        {
+        case 1:
+
+            cout << "Enter value: ";
+
+            while (!(cin >> value))
+            {
+                cin.clear();
+                cin.ignore(1000, '\n');
+
+                cout << "Invalid value. Enter an integer: ";
+            }
+
+            enqueue(value);
+            break;
+
+        case 2:
+
+            dequeue();
+            break;
+
+        case 3:
+
+            displayCircularQueue();
+            break;
+
+        case 4:
+
+            cout << "Returning to Data Structure Workbench...\n";
+            break;
+
+        default:
+
+            cout << "Invalid choice. Please select 1 to 4.\n";
+        }
+
+    } while (choice != 4);
+}
+
+/* =========================================================
+   MEMORY CLEANUP
+   ========================================================= */
+
+void LinearDS::clearSinglyList()
+{
+    while (singlyHead != NULL)
+    {
+        SinglyNode *temporary = singlyHead;
+
+        singlyHead = singlyHead->next;
+
+        delete temporary;
+    }
+}
+
+void LinearDS::clearDoublyList()
+{
+    while (doublyHead != NULL)
+    {
+        DoublyNode *temporary = doublyHead;
+
+        doublyHead = doublyHead->next;
+
+        delete temporary;
+    }
+}
+
+/* =========================================================
+   MAIN DATA STRUCTURE WORKBENCH
+   ========================================================= */
 
 void LinearDS::interactiveMenu()
 {
     int choice = 0;
+
     do
     {
-        cout << "\n---------------- LINEAR DATA STRUCTURES WORKBENCH ----------------\n";
-        cout << " 1. Singly Linked List: Insert Node\n";
-        cout << " 2. Singly Linked List: Delete Node\n";
-        cout << " 3. Singly Linked List: Display\n";
-        cout << " 4. Doubly Linked List: Insert Node\n";
-        cout << " 5. Doubly Linked List: Delete Node\n";
-        cout << " 6. Doubly Linked List: Display\n";
-        cout << " 7. Stack: Push\n";
-        cout << " 8. Stack: Pop\n";
-        cout << " 9. Stack: Display\n";
-        cout << "10. Circular Queue: Enqueue\n";
-        cout << "11. Circular Queue: Dequeue\n";
-        cout << "12. Circular Queue: Display\n";
-        cout << "13. Back to Main Menu\n";
-        cout << "-------------------------------------------------------------------\n";
-        cout << "Enter your choice (1-13): ";
+        cout << "\n============================================\n";
+        cout << "       DATA STRUCTURE WORKBENCH\n";
+        cout << "============================================\n";
+        cout << "1. Singly Linked List\n";
+        cout << "2. Doubly Linked List\n";
+        cout << "3. Stack\n";
+        cout << "4. Circular Queue\n";
+        cout << "5. Back to Main Menu\n";
+        cout << "============================================\n";
+        cout << "Enter your choice: ";
 
-        if (!(cin >> choice))
+        while (!(cin >> choice))
         {
             cin.clear();
             cin.ignore(1000, '\n');
-            cout << "Invalid input! Enter a valid integer.\n";
-            continue;
+
+            cout << "Invalid input. Enter a number from 1 to 5: ";
         }
 
-        int val = 0;
         switch (choice)
         {
         case 1:
-            cout << "Enter integer to insert in SLL: ";
-            if (cin >> val)
-                insertNodeSLL(val);
+
+            singlyLinkedListMenu();
             break;
+
         case 2:
-            cout << "Enter integer to delete from SLL: ";
-            if (cin >> val)
-                deleteNodeSLL(val);
+
+            doublyLinkedListMenu();
             break;
+
         case 3:
-            displayListSLL();
+
+            stackMenu();
             break;
+
         case 4:
-            cout << "Enter integer to insert in DLL: ";
-            if (cin >> val)
-                insertNodeDLL(val);
+
+            circularQueueMenu();
             break;
+
         case 5:
-            cout << "Enter integer to delete from DLL: ";
-            if (cin >> val)
-                deleteNodeDLL(val);
+
+            cout << "Returning to main menu...\n";
             break;
-        case 6:
-            displayListDLL();
-            break;
-        case 7:
-            cout << "Enter integer to push to Stack: ";
-            if (cin >> val)
-                push(val);
-            break;
-        case 8:
-            pop();
-            break;
-        case 9:
-            displayStack();
-            break;
-        case 10:
-            cout << "Enter integer to enqueue: ";
-            if (cin >> val)
-                enqueue(val);
-            break;
-        case 11:
-            dequeue();
-            break;
-        case 12:
-            displayQueue();
-            break;
-        case 13:
-            cout << "Returning to Main Menu...\n";
-            break;
+
         default:
-            cout << "Invalid option! Choose between 1 and 13.\n";
+
+            cout << "Invalid choice. Please select 1 to 5.\n";
         }
-    } while (choice != 13);
+
+    } while (choice != 5);
+}
+
+/* =========================================================
+   DESTRUCTOR
+   ========================================================= */
+
+LinearDS::~LinearDS()
+{
+    clearSinglyList();
+    clearDoublyList();
 }

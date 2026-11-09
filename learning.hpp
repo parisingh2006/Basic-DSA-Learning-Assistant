@@ -18,4 +18,9 @@ private:
     void explainPriorityQueue();
     void explainBST();
     void explainRecursion();
+
+    void showResources(
+        const char *video,
+        const char *reading,
+        const char *practice);
 };

@@ -1,66 +1,68 @@
 #pragma once
 
-struct SLLNode
-{
-    int data;
-    SLLNode *next;
-};
-
-struct DLLNode
-{
-    int data;
-    DLLNode *prev;
-    DLLNode *next;
-};
-
 class LinearDS
 {
 private:
-    // Singly Linked List
-    SLLNode *sllHead;
+    struct SinglyNode
+    {
+        int data;
+        SinglyNode *next;
+    };
 
-    // Doubly Linked List
-    DLLNode *dllHead;
+    struct DoublyNode
+    {
+        int data;
+        DoublyNode *previous;
+        DoublyNode *next;
+    };
 
-    // Fixed Bounded Array Stack
-    static const int STACK_CAPACITY = 100;
-    // const keeps the value fixed capacity i.e. 100
-    int stack[STACK_CAPACITY];
-    int top;
+    static const int STACK_SIZE = 50;
+    static const int QUEUE_SIZE = 50;
 
-    // Circular Array Queue
-    static const int QUEUE_CAPACITY = 100;
-    int queue[QUEUE_CAPACITY];
-    int front;
-    int rear;
+    SinglyNode *singlyHead;
+    DoublyNode *doublyHead;
 
-    void clearSLL(); // for deletion
-    void clearDLL();
+    int stackArray[STACK_SIZE];
+    int stackTop;
+
+    int circularQueue[QUEUE_SIZE];
+    int queueFront;
+    int queueRear;
+    int queueCount;
+
+    void singlyLinkedListMenu();
+    void doublyLinkedListMenu();
+    void stackMenu();
+    void circularQueueMenu();
+
+    void insertSinglyAtBeginning(int value);
+    void insertSinglyAtEnd(int value);
+    void deleteSinglyFromBeginning();
+    void deleteSinglyByValue(int value);
+    void displaySingly();
+
+    void insertDoublyAtBeginning(int value);
+    void insertDoublyAtEnd(int value);
+    void deleteDoublyFromBeginning();
+    void deleteDoublyByValue(int value);
+    void displayDoublyForward();
+    void displayDoublyBackward();
+
+    void push(int value);
+    void pop();
+    void displayStack();
+
+    void enqueue(int value);
+    void dequeue();
+    void displayCircularQueue();
+
+    void clearSinglyList();
+    void clearDoublyList();
 
 public:
-    LinearDS();  // for initializing
-    ~LinearDS(); // destructor for deletion/destroying object
+    LinearDS();
 
-    // Singly Linked List
-    void insertNodeSLL(int val);
-    void deleteNodeSLL(int val);
-    void displayListSLL() const;
-
-    // Doubly Linked List
-    void insertNodeDLL(int val);
-    void deleteNodeDLL(int val);
-    void displayListDLL() const;
-
-    // Stack Operations
-    void push(int val);
-    void pop();
-    void displayStack() const;
-
-    // Queue Operations
-    void enqueue(int val);
-    void dequeue();
-    void displayQueue() const;
-
-    // Interactive Sub-Menu
     void interactiveMenu();
+
+    ~LinearDS();
 };

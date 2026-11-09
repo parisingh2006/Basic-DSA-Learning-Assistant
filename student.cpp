@@ -1,12 +1,9 @@
 #include <iostream>
-#include "Student.hpp"
-// included Student.hpp as the class declaration and implementation of functions.
+#include "student.hpp"
 
 using namespace std;
 
-// :: => scope resolution operator used for defining outside the class
-
-Student::Student() // Constructor defination of Student class
+Student::Student()
 {
     studentID = 0;
     studentName[0] = '\0';
@@ -15,67 +12,58 @@ Student::Student() // Constructor defination of Student class
 
 void Student::registerStudent()
 {
-    cout << "\nEnter Student ID (positive integer): ";
-    cin >> studentID;
+    int id;
 
-    if (cin.fail()) // gives true if input fails
-    {
-        cin.clear();            // unfreezes cin or sets error state back to normal
-        cin.ignore(1000, '\n'); // deletes the leftover wrong input
-        // it will ignore upto 1000 characters , \n represents new line
-        cout << "Invalid Student ID! Must be a valid number.\n";
-        return;
-    }
+    cout << "\n============================================\n";
+    cout << "             STUDENT REGISTRATION\n";
+    cout << "============================================\n";
 
-    if (studentID <= 0)
+    cout << "Enter Student ID: ";
+
+    while (!(cin >> id) || id <= 0)
     {
+        cin.clear();
         cin.ignore(1000, '\n');
-        cout << "Student ID must be positive!\n";
-        return;
+
+        cout << "Invalid Student ID.\n";
+        cout << "Enter a positive numeric Student ID: ";
     }
 
-    // after reading integer , using cin.ignore again to remove remaining newline
     cin.ignore(1000, '\n');
 
-    cout << "Enter Student Full Name: ";
+    cout << "Enter Student Name: ";
+
     cin.getline(studentName, 50);
 
-    if (studentName[0] == '\0')
+    while (studentName[0] == '\0')
     {
-        cout << "Name cannot be empty!\n";
-        return;
+        cout << "Name cannot be empty.\n";
+        cout << "Enter Student Name: ";
+
+        cin.getline(studentName, 50);
     }
 
+    studentID = id;
     registered = true;
-    cout << "\nRegistration Successful!\n";
-}
 
-void Student::displayStudent() const
-{
-    if (!registered)
-    {
-        cout << "\nPlease register first!\n";
-        return;
-    }
-
-    cout << "\n================= STUDENT PROFILE =================\n";
+    cout << "\n--------------------------------------------\n";
+    cout << "Registration successful.\n";
     cout << "Student ID   : " << studentID << "\n";
     cout << "Student Name : " << studentName << "\n";
-    cout << "===================================================\n";
+    cout << "--------------------------------------------\n";
 }
 
-// const use because we dont want to modify any further
-bool Student::isRegistered() const
+bool Student::isRegistered()
 {
     return registered;
 }
 
-int Student::getStudentID() const
+int Student::getStudentID()
 {
     return studentID;
 }
 
-const char *Student::getStudentName() const
+const char *Student::getStudentName()
 {
     return studentName;
 }

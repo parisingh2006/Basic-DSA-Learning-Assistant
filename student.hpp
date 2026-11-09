@@ -2,23 +2,19 @@
 
 class Student
 {
-    // kept it private to achieve data hiding and encapsulation
 private:
     int studentID;
-    char studentName[50]; // array having space of 50 char for a name
-    bool registered;      // registration status
+    char studentName[50];
+    bool registered;
 
 public:
-    // public functions are accessible outside the class
-    Student(); // constructor declaration
+    Student();
 
-    void registerStudent(); // function to register student
-    void displayStudent() const;
-    bool isRegistered() const;
+    void registerStudent();
 
-    // const taken as the function does NOT modify the object
+    bool isRegistered();
 
-    int getStudentID() const;
-    const char *getStudentName() const;
-    // name is stored in character array and it can be accessed by a pointer
+    int getStudentID();
+
+    const char *getStudentName();
 };
