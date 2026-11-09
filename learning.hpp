@@ -7,11 +7,15 @@ public:
     void showTopicDetails(int choice);
 
 private:
-    // topics explainations functions kept as private
     void explainArrays();
+    void explainStrings();
     void explainSearching();
     void explainSorting();
     void explainLinkedLists();
     void explainStacks();
     void explainQueues();
+    void explainCircularQueue();
+    void explainPriorityQueue();
+    void explainBST();
+    void explainRecursion();
 };
