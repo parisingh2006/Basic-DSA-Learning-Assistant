@@ -18,6 +18,14 @@ Performance::Performance()
 
 void Performance::setPerformance(int newScore, int newTotalQuestions)
 {
+    if (newTotalQuestions <= 0 ||
+        newScore < 0 ||
+        newScore > newTotalQuestions)
+    {
+        quizAttempted = false;
+        return;
+    }
+
     score = newScore;
     totalQuestions = newTotalQuestions;
     quizAttempted = true;
@@ -33,13 +41,20 @@ void Performance::setTopicPerformance(
         return;
     }
 
+    if (newTotalQuestions < 0 ||
+        newScore < 0 ||
+        newScore > newTotalQuestions)
+    {
+        return;
+    }
+
     topicScore[topicIndex] = newScore;
     topicQuestions[topicIndex] = newTotalQuestions;
 }
 
 int Performance::calculatePercentage()
 {
-    if (totalQuestions == 0)
+    if (!quizAttempted || totalQuestions <= 0)
     {
         return 0;
     }
@@ -49,48 +64,43 @@ int Performance::calculatePercentage()
 
 void Performance::displayPerformance()
 {
-    cout << "\n========================================\n";
-    cout << "          PERFORMANCE DASHBOARD\n";
-    cout << "========================================\n";
+    cout << "\n====================================================\n";
+    cout << "                 PERFORMANCE DASHBOARD\n";
+    cout << "====================================================\n";
 
-    if (!quizAttempted || totalQuestions == 0)
+    if (!quizAttempted)
     {
         cout << "No quiz performance available yet.\n";
-        cout << "Attempt a quiz to view your performance.\n";
-        cout << "========================================\n";
+        cout << "Please attempt the MCQ quiz first.\n";
+        cout << "====================================================\n";
         return;
     }
 
-    cout << "Total Questions : " << totalQuestions << "\n";
-    cout << "Correct Answers : " << score << "\n";
-    cout << "Overall Accuracy: "
-         << calculatePercentage() << "%\n";
-
-    cout << "\nPerformance Level: ";
-
     int percentage = calculatePercentage();
 
-    if (percentage >= 80)
+    cout << "Overall Score : " << score
+         << " / " << totalQuestions << "\n";
+
+    cout << "Accuracy      : " << percentage << "%\n";
+
+    if (percentage < 40)
     {
-        cout << "Excellent\n";
+        cout << "Level         : Needs Improvement\n";
     }
-    else if (percentage >= 60)
+    else if (percentage < 70)
     {
-        cout << "Good\n";
+        cout << "Level         : Developing\n";
     }
-    else if (percentage >= 40)
+    else if (percentage < 90)
     {
-        cout << "Needs Improvement\n";
+        cout << "Level         : Good\n";
     }
     else
     {
-        cout << "Needs Stronger Practice\n";
+        cout << "Level         : Excellent\n";
     }
 
-    cout << "\nTopic-wise Performance\n";
-    cout << "----------------------------------------\n";
-
-    const char *topics[9] =
+    const char *topicNames[9] =
         {
             "Arrays",
             "Strings",
@@ -102,40 +112,45 @@ void Performance::displayPerformance()
             "Binary Search Tree",
             "Recursion"};
 
+    cout << "\n----------------------------------------------------\n";
+    cout << "                 TOPIC PERFORMANCE\n";
+    cout << "----------------------------------------------------\n";
+
     for (int i = 0; i < 9; i++)
     {
-        if (topicQuestions[i] > 0)
+        cout << topicNames[i] << " : ";
+
+        if (topicQuestions[i] == 0)
+        {
+            cout << "Not Attempted\n";
+        }
+        else
         {
             int percentage =
                 (topicScore[i] * 100) / topicQuestions[i];
 
-            cout << topics[i]
-                 << " : "
-                 << topicScore[i]
-                 << "/"
-                 << topicQuestions[i]
-                 << " ("
-                 << percentage
-                 << "%)\n";
+            cout << topicScore[i]
+                 << "/" << topicQuestions[i]
+                 << " (" << percentage << "%)\n";
         }
     }
 
-    int strongest = getStrongestTopic();
     int weakest = getWeakestTopic();
-
-    if (strongest != -1)
-    {
-        cout << "\nStrongest Topic : "
-             << topics[strongest] << "\n";
-    }
+    int strongest = getStrongestTopic();
 
     if (weakest != -1)
     {
-        cout << "Weakest Topic   : "
-             << topics[weakest] << "\n";
+        cout << "\nWeakest Topic  : "
+             << topicNames[weakest] << "\n";
     }
 
-    cout << "========================================\n";
+    if (strongest != -1)
+    {
+        cout << "Strongest Topic: "
+             << topicNames[strongest] << "\n";
+    }
+
+    cout << "====================================================\n";
 }
 
 int Performance::getWeakestTopic()

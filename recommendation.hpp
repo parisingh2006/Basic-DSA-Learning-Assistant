@@ -4,7 +4,9 @@ class Recommendation
 {
 private:
     const char *getTopicName(int topicIndex);
+
     void showStudyAdvice(int topicIndex);
+
     void showPracticeAdvice(int topicIndex);
 
 public:
