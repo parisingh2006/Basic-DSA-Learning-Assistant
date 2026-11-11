@@ -1,4 +1,14 @@
-2314
-Pari Singh
-1
-5
+SMART_DSA_PROGRESS
+StudentID 1
+StudentName pari
+OverallScore 2 3
+TOPIC_PERFORMANCE
+Arrays 2 3
+Strings 0 0
+Searching 0 0
+Sorting 0 0
+Linked Lists 0 0
+Stack 0 0
+Queue 0 0
+Binary Search Tree 0 0
+Recursion 0 0
