@@ -17,116 +17,105 @@ const char *Recommendation::getTopicName(int topicIndex)
             "Binary Search Tree",
             "Recursion"};
 
-    if (topicIndex >= 0 && topicIndex < 9)
+    if (topicIndex < 0 || topicIndex >= 9)
     {
-        return topics[topicIndex];
+        return "No specific topic";
     }
 
-    return "Unknown Topic";
+    return topics[topicIndex];
 }
 
 void Recommendation::showStudyAdvice(int topicIndex)
 {
-    cout << "\nStudy Recommendation\n";
-    cout << "----------------------------------------\n";
+    cout << "\nStudy Advice:\n";
 
     switch (topicIndex)
     {
     case 0:
-        cout << "Revise array traversal, insertion, deletion and indexing.\n";
-        cout << "Focus on the time complexity of array operations.\n";
+        cout << "- Revise indexing, traversal and array operations.\n";
         break;
 
     case 1:
-        cout << "Revise string traversal, comparison and basic manipulation.\n";
-        cout << "Practise character-by-character problem solving.\n";
+        cout << "- Revise character traversal and string operations.\n";
         break;
 
     case 2:
-        cout << "Revise linear search and binary search.\n";
-        cout << "Remember that binary search requires sorted data.\n";
+        cout << "- Revise Linear Search and Binary Search.\n";
         break;
 
     case 3:
-        cout << "Revise bubble, selection and insertion sort.\n";
-        cout << "Compare their time complexities.\n";
+        cout << "- Compare Bubble, Selection and Insertion Sort.\n";
         break;
 
     case 4:
-        cout << "Revise linked-list nodes, traversal, insertion and deletion.\n";
-        cout << "Pay special attention to pointer movement.\n";
+        cout << "- Revise node links, insertion and deletion.\n";
         break;
 
     case 5:
-        cout << "Revise LIFO behaviour and stack operations.\n";
-        cout << "Practise push, pop, peek and overflow/underflow.\n";
+        cout << "- Revise LIFO, push, pop and stack overflow/underflow.\n";
         break;
 
     case 6:
-        cout << "Revise FIFO behaviour and queue operations.\n";
-        cout << "Practise enqueue, dequeue and empty/full conditions.\n";
+        cout << "- Revise FIFO, enqueue, dequeue and queue conditions.\n";
         break;
 
     case 7:
-        cout << "Revise BST insertion, searching and tree traversals.\n";
-        cout << "Practise inorder, preorder and postorder traversal.\n";
+        cout << "- Revise BST insertion, search and traversals.\n";
         break;
 
     case 8:
-        cout << "Revise recursion, base cases and recursive calls.\n";
-        cout << "Trace simple recursive functions step by step.\n";
+        cout << "- Identify base cases and recursive cases carefully.\n";
         break;
 
     default:
-        cout << "Revise the fundamental DSA concepts.\n";
+        cout << "- Review your DSA fundamentals.\n";
     }
 }
 
 void Recommendation::showPracticeAdvice(int topicIndex)
 {
-    cout << "\nPractice Recommendation\n";
-    cout << "----------------------------------------\n";
+    cout << "Practice Advice:\n";
 
     switch (topicIndex)
     {
     case 0:
-        cout << "Practise array traversal, maximum/minimum and insertion problems.\n";
+        cout << "- Solve array traversal and maximum/minimum problems.\n";
         break;
 
     case 1:
-        cout << "Practise string reversal, character counting and palindrome problems.\n";
+        cout << "- Practice string reversal and character counting.\n";
         break;
 
     case 2:
-        cout << "Practise linear search and binary search problems.\n";
+        cout << "- Practice both linear and binary search.\n";
         break;
 
     case 3:
-        cout << "Practise sorting small arrays using the three basic algorithms.\n";
+        cout << "- Implement sorting algorithms manually.\n";
         break;
 
     case 4:
-        cout << "Practise linked-list insertion, deletion and traversal.\n";
+        cout << "- Practice linked-list insertion and deletion.\n";
         break;
 
     case 5:
-        cout << "Practise stack push, pop and peek operations.\n";
+        cout << "- Practice stack operations and bracket problems.\n";
         break;
 
     case 6:
-        cout << "Practise queue insertion, deletion and circular queue concepts.\n";
+        cout << "- Practice enqueue and dequeue operations.\n";
         break;
 
     case 7:
-        cout << "Practise BST insertion, search and tree traversals.\n";
+        cout << "- Practice BST insertion, search, deletion and traversal.\n";
         break;
 
     case 8:
-        cout << "Practise factorial, Fibonacci and sum-of-N recursion problems.\n";
+        cout << "- Trace small recursive examples by hand.\n";
         break;
 
     default:
-        cout << "Practise basic DSA problems regularly.\n";
+        cout << "- Practice basic DSA problems regularly.\n";
     }
 }
 
@@ -136,59 +125,61 @@ void Recommendation::suggestTopic(
     bool quizAttempted,
     int weakestTopic)
 {
-    cout << "\n========================================\n";
-    cout << "        LEARNING RECOMMENDATION\n";
-    cout << "========================================\n";
+    cout << "\n====================================================\n";
+    cout << "             LEARNING RECOMMENDATION\n";
+    cout << "====================================================\n";
 
-    if (!quizAttempted || totalQuestions == 0)
+    if (!quizAttempted)
     {
-        cout << "No quiz performance is available yet.\n";
-        cout << "Please attempt the MCQ quiz first.\n";
-        cout << "========================================\n";
+        cout << "No quiz has been attempted yet.\n";
+        cout << "Recommendation: Attempt the MCQ quiz first.\n";
+        cout << "This will help identify your weaker areas.\n";
+        cout << "====================================================\n";
         return;
     }
 
-    int percentage = (score * 100) / totalQuestions;
+    if (totalQuestions <= 0 ||
+        score < 0 ||
+        score > totalQuestions)
+    {
+        cout << "Invalid performance information.\n";
+        cout << "Please attempt the quiz again.\n";
+        cout << "====================================================\n";
+        return;
+    }
 
-    cout << "Overall Quiz Accuracy: "
+    int percentage =
+        (score * 100) / totalQuestions;
+
+    cout << "Quiz Accuracy: "
          << percentage << "%\n";
 
-    cout << "\nOverall Feedback\n";
-    cout << "----------------------------------------\n";
-
-    if (percentage >= 80)
+    if (weakestTopic >= 0 && weakestTopic < 9)
     {
-        cout << "Excellent performance!\n";
-        cout << "Continue practising and attempt more challenging problems.\n";
-    }
-    else if (percentage >= 60)
-    {
-        cout << "Good performance.\n";
-        cout << "Revise weak concepts and continue regular practice.\n";
-    }
-    else if (percentage >= 40)
-    {
-        cout << "Your fundamentals need more practice.\n";
-        cout << "Focus on the recommended weak topic below.\n";
-    }
-    else
-    {
-        cout << "Strong revision is recommended.\n";
-        cout << "Start with the fundamental concepts of the weak topic.\n";
-    }
-
-    if (weakestTopic != -1)
-    {
-        cout << "\nWeakest Topic: "
+        cout << "Focus Topic  : "
              << getTopicName(weakestTopic) << "\n";
 
         showStudyAdvice(weakestTopic);
         showPracticeAdvice(weakestTopic);
     }
+    else if (percentage < 40)
+    {
+        cout << "\nYour overall score needs improvement.\n";
+        cout << "Start with fundamental DSA concepts.\n";
+        cout << "Recommended focus: Arrays and Searching.\n";
+    }
+    else if (percentage < 70)
+    {
+        cout << "\nYour performance is developing.\n";
+        cout << "Strengthen your fundamentals through practice.\n";
+        cout << "Recommended focus: Sorting and Linked Lists.\n";
+    }
     else
     {
-        cout << "\nNo topic-specific performance is available yet.\n";
+        cout << "\nGood performance!\n";
+        cout << "Continue challenging yourself with advanced practice.\n";
+        cout << "Recommended focus: Stack, Queue, BST and Recursion.\n";
     }
 
-    cout << "========================================\n";
+    cout << "====================================================\n";
 }
